@@ -17,7 +17,7 @@
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \newtheorem{example}{Example}[section]
-\newtheorem{exercise}{Exercise}[section]
+\newtheorem{exercise}{Exercise}[subsection]
 \newtheorem{solution}{Solution}[exercise]
 \usepackage{xcolor}
 \usepackage{graphicx}
@@ -27,6 +27,7 @@
 \usepackage{hyperref}
 \usepackage{bm}
 \usepackage{quiver} 
+\usepackage{todonotes}
 %\usepackage[a5paper, total={108mm, 160mm}]{geometry}
 
 \pagecolor[HTML]{ECE1CB} %beige
@@ -103,13 +104,21 @@
 I need to do exercises so I found this \href{https://homepages.math.uic.edu/~bshipley/krause.chicago_ex.pdf}{Exercises on derived categories, resolutions, and Brown
 representability} to I suppose work through 
 
-\section{}
-\subsection{}
+For the sake of consistancy denote
+\begin{enumerate}
+    \item $\mathcal{A}$ an abelian category
+    \item $\mathbf{C}(\mathcal{A})$ the category of complexes of elements in $\mathcal{A}$
+    \item $\mathbf{K}(\mathcal{A})$ the category of complexes modulo homotopy
+    \item $\mathbf{D}(\mathcal{A})$ the derived category $\mathbf{K}(\mathcal{A})[\{\text{q-iso}\}^{-1}]$ with $\mathbf{D}^b, \mathbf{D}^+, \mathbf{D}^-$ being the subcategory of bounded, positive degree and negative degree complexes respectively
+    \item For a localising system we can take the category of spans modulo some relations as the localisation, for this I use the convention from Gelfand-Manin, not that of the book this is from.
+\end{enumerate}
+\setcounter{section}{1} 
+\setcounter{subsection}{2} 
 \begin{exercise}
 Let $\mathcal{A}$ be an abelian category. Show that $\mathbf{K}(\mathcal A)$ and $\mathbf D (\mathcal A)$ are additive categories, and that the canonical functor $\mathbf{K} (\mathcal A) \to \mathbf D (\mathcal A)$ is additive
 \end{exercise}
 \begin{solution}
-Clearly the hom sets for the category $\mathbf K (\mathcal A)$ admits an abelian group structure by just adding in each component in $K(\mathcal{A})$ and then noting that \[H=\{f \vert f \simeq 0\}=\{f \vert \exists \phi, f = d\phi + \phi d\}\] is a subgroup as $d\phi + \phi d - (d\mu + \mu d)=d(\phi-\mu)+(\phi-\mu)d$ and $0 \in H$ so the structure decends naturally to the quotient. Since $\{q-iso\}$ form a localising class in $\mathbf K (\mathcal A)$ we can consider morphisms in $\mathbf{D} (\mathcal  A)$ as spans $X \rightarrow Z \leftarrow Y$ which have an abelian group structure since for two morphisms $(s \colon X \rightarrow Z \leftarrow Y \colon f )+ (s'\colon X \rightarrow  Z' \leftarrow Y \colon f')$ we can define their sum as follows, first we use the extensionality to construct some $W$ over both $Z, Z'$ so that the square 
+Clearly the hom sets for the category $\mathbf K (\mathcal A)$ admits an abelian group structure by just adding in each component in $\mathbf{C}(\mathcal{A})$ and then noting that \[H=\{f \vert f \simeq 0\}=\{f \vert \exists \phi, f = d\phi + \phi d\}\] is a subgroup as $d\phi + \phi d - (d\mu + \mu d)=d(\phi-\mu)+(\phi-\mu)d$ and $0 \in H$ so the structure decends naturally to the quotient. Since $\{q-iso\}$ form a localising class in $\mathbf K (\mathcal A)$ we can consider morphisms in $\mathbf{D} (\mathcal  A)$ as spans $X \rightarrow Z \leftarrow Y$ which have an abelian group structure since for two morphisms $(s \colon X \rightarrow Z \leftarrow Y \colon f )+ (s'\colon X \rightarrow  Z' \leftarrow Y \colon f')$ we can define their sum as follows, first we use the extensionality to construct some $W$ over both $Z, Z'$ so that the square 
 \[\begin{tikzcd}
 W \arrow[d,dashed, "a'"'] \arrow[r, dashed, "a"] & Z \arrow[d] \\
 Z' \arrow[r]                      & X          
@@ -124,8 +133,10 @@ as the sum of our two morphisms. Since sadly this choice of $W$ isn't canonical,
 W^\Delta \arrow[d, dashed] \arrow[r, dashed] & W' \arrow[d] & W^\square \arrow[d, dashed] \arrow[r, dashed] & W' \arrow[d] & W^\circ \arrow[d, dashed] \arrow[r, dashed] & W^\square \arrow[d] \\
 W \arrow[r]                                  & Z            & W \arrow[r]                                   & Z'           & W^\Delta \arrow[r]                          & X                  
 \end{tikzcd}\]
-This however lacks canonical morphisms to $W,W'$ as we have two natural routes, this can be fixed by noting that the maps $W^\circ \rightrightarrows W$ are equalised once we get to $X$ and so since $W \to X$ is a quasi iso they must be equalised from some quasi iso $V_* \to W^\circ$, doing the same for $W'$ we get two maps to $W^\circ$ so applying the extensionality one more time gives us some $V$ with quasi isomorphisms $\mu\colon V \to W, \mu' \colon V \to W'$ satisfying $a\mu=b\mu', a'\mu=b'\mu'$ and is hense a common roof for our two sums.
 
+This is almost what we want as each of the squares constructing $W^\Delta,W^\square$ tell us going via $W^\Delta$ we have the commutativity we want for $a,b$ and going via $W^\square$ we have commutativity for $a',b'$. Our issue is that we still lack canonical morphisms to $W,W'$ letting us do both at once.
+
+As we have two natural routes, this can be fixed by noting that the maps $W^\circ \rightrightarrows W$ are equalised once we get to $X$ and so since $W \to X$ is a quasi iso they must be equalised from some quasi iso $V_* \to W^\circ$, doing the same for $W'$ we get two maps to $W^\circ$ so applying the extensionality one more time gives us some $V$ with quasi isomorphisms $\mu\colon V \to W, \mu' \colon V \to W'$, and since we've fixed our problem, $a\mu=b\mu', a'\mu=b'\mu'$. So we have a common roof for our two sums so they're equivalent and our construction is well defined.
 
 We clearly have identity $id\colon X \rightarrow X \leftarrow Y \colon 0$ since for anything else $Z$ is a common roof so we just end up with $f+0=f:Z \to Y$ and $s:Z \to X$ so nothing chages. For any $(s \colon X \rightarrow Z \leftarrow Y \colon f )$ we have inverse $(s \colon X \rightarrow Z \leftarrow Y \colon -f )$ as in that case we can choose $W = Z$ leaving the triangle 
 \[\begin{tikzcd}
@@ -140,13 +151,13 @@ X \arrow[d, Rightarrow,no head,] \arrow[rd, "0"] & Z \arrow[d, "0"] \arrow[ld]  
 X                                                & Y                                          
 \end{tikzcd}
 \]
-So we've shown that $\mathbf{K}(\mathcal{A}), \mathbf{D}(\mathcal{A})$ are preadditive, we now need to show that they have zero objects and products. We obviously have a zero objects in $K(\mathcal{A})$ given by the zero complex, this then decends to a zero object in $\mathbf{K}(\mathcal{A})$ as the homotopy relation can only make the hom sets smaller, then in the derived category we have that the zero morphism is a quasi isomorphism from the zero complex to itself and hense this is a zero object in $\mathbf{D}(\mathcal{A})$ too.
+So we've shown that $\mathbf{K}(\mathcal{A}), \mathbf{D}(\mathcal{A})$ are preadditive, we now need to show that they have zero objects and products. We obviously have a zero objects in $\mathbf{C}(\mathcal{A})$ given by the zero complex, this then decends to a zero object in $\mathbf{K}(\mathcal{A})$ as the homotopy relation can only make the hom sets smaller, then in the derived category we have that the zero morphism is a quasi isomorphism from the zero complex to itself and hense this is a zero object in $\mathbf{D}(\mathcal{A})$ too.
 
 For finite products we just need to check for binary products. We can find the product of two complexes by either doing $(A \oplus B)_i = A_i \oplus B_i$ or $(A \oplus B)_i = \bigoplus_{m+n=i}A_m \oplus B_n$ and honestly I'm not sure which. Ok there's a problem with the second one which is good for me. The problem is we would need potentially infinite products in $\mathcal A$ which may not exist. Instead we will try the first one, which honestly I much prefer to work with anyway. Given two complexes $A,B$ we can construct the product complex $A \oplus B$ having 
 \[
 (A \oplus B)^i = A^i \oplus B^i \quad d^i = \begin{pmatrix}d_A & 0 \\ 0 & d_b\end{pmatrix}
 \]
-We can see that this is a product in $K(\mathcal{A})$ by zooming in to degree $0$ and noting that a map $Z \to A \oplus B$ we get the diagram
+We can see that this is a product in $\mathbf{C}(\mathcal{A})$ by zooming in to degree $0$ and noting that a map $Z \to A \oplus B$ we get the diagram
 \[
 \begin{tikzcd}
 \vdots                                 & \vdots                   \\
@@ -159,5 +170,57 @@ Which clearly commutes iff $df=fd$ and $dg=gd$ ie that we have a map to $A$ and 
 
 We can now start the second part of the question. That is that the canonical map $\mathbf{K}(\mathcal{A}) \to \mathbf{D}(\mathcal{A})$ is an additive functor, that is it's a preadditive functor, that is it's on each hom group a map of abelian groups. For this we just check that when we do the derived addition to $X = X \to Y, X = X \to Y$.  In this case we can choose common roof $X$ and hense our projection maps are just the identities and so the sum is just the sum in $\mathbf K (\mathcal A)$
 \end{solution}
+\pagebreak
+\setcounter{subsection}{4} 
+\begin{exercise}
+    Let $\mathcal{A}$ be an abelian category and denote by $T$ the class of all quasi-isomorphisms in $\mathbf{C}(\mathcal{A})$. Show that two maps $f,g \colon X \to Y$ in $\mathbf{C}(\mathcal{A})$ are identified by the canonical functor $\mathbf{C}(\mathcal{A})\to \mathbf{C}(\mathcal{A})[T^{-1}]$ if $f - g$ is null homotopic 
+\end{exercise}
+\begin{solution}
+    Note we have a problem, it's not the case that $T$ is a localising system in $\mathbf{C}(\mathcal{A})$ and so we don't have an easy way to attack the problem.
+
+    We start the only way that we can, suppose that $d \psi + \psi d = f - g$ we want to squeeze out a quasi isomorphism somewhere here. \todo{litterally the whole question}
+\end{solution}
+\pagebreak
+\setcounter{subsection}{5}
+\begin{exercise}
+    Let $\mathcal{A}$ be the module category for some ring $\Lambda$. Show that $\hom_{\mathbf{D}(\mathcal{A})}(\Lambda,X) \cong H^0(X)$ for every complex of $\Lambda$ modules
+\end{exercise} 
+\begin{solution}
+    First note that because homology groups respect homotopy we can equivocate homotopy representatives and homotopy classes relatively freely. Suppose then that we have a morphism $\Lambda \to X$, that is a $H^0$ complex $Z$ with q-iso to $\Lambda$ and a map to $X$, taking homology of this triangle then we get $\Lambda \leftarrow H^0(Z) \rightarrow H^0(X)$ where the first map is a quasi isomorphism, so we get a canonical element of $H^0(X)$ by pulling back $1$ and then pushing it down to $H^0(X)$. This gives us a group homomorphism $\hom_{\mathbf{D}(\mathcal{A})}(\Lambda, X) \to H^0(X)$, it's well defnied as if we had another roof it's the same up to coherent quasi isomorphism so gives the same maps in homology. Additionally it's a group hom as if we add together two maps we have seen that this just adds together the maps modulo quasi isomorphisms that vanish when we take $H^0$ and so we end up with $(f+g)(1)=f(1)+g(1)$ so we do in fact get a group homomorphism. It suffices now to check that it's an isomorphism. Clearly it's surjective by taking $\Lambda = \Lambda \to X$ sending $1$ to any element. Then if $f \mapsto 0$ we have that the induced map on homology $H^0(\Lambda)=\Lambda\to H^0(X)$ maps $1$ to $0$ and is thus the zero map as it must respect the $\Lambda$-action. To complete the proof then we want to prove the following lemma
+    \begin{lemma}
+        If $f \in \hom_{\mathbf{D}(\mathcal{A})}(X,Y)$ induces the zero map on all homology groups, it is the zero map in the derived category, that is it factors through zero / is equivalent to $X = X \rightarrow 0 \rightarrow Y$
+    \end{lemma}
+    \begin{proof}
+        \todo{prove this lemma, or at least prove its true for $X$ a $H^0$ complex}
+    \end{proof}
+%     \[
+% \begin{tikzcd}
+%                   & \vdots                                     & \vdots           \\
+% 0                 & 0 \arrow[r] \arrow[u]                      & X^1 \arrow[u]    \\
+% \Lambda \arrow[u] & \ker(d^{0}) \arrow[r] \arrow[u] \arrow[l] & X^0 \arrow[u]    \\
+% 0 \arrow[u]       & Z^{-1} \arrow[r] \arrow[u]                 & X^{-1} \arrow[u] \\
+%                   & \vdots \arrow[u]                           & \vdots \arrow[u]
+% \end{tikzcd}
+%     \]
+%     W
+\end{solution}
+\pagebreak
+\begin{exercise}
+    Let $\mathcal{A}$ be an abelian category. Show that the canonical functor $\mathcal{A} \to \mathbf{D}(\mathcal{A})$ identifies $\mathcal{A}$ with the full subcategory of complexes $X$ in $\mathbf{D}(\mathcal{A})$ that have $H^n X=0 \ \forall n \neq 0$ 
+\end{exercise}
+\begin{solution}
+    We have to show two things, that this is fully faithful, and that it's essentially surjective. To first do essential surjection we note that $X\cong H^0(X)$ in the derived category as we have quasi isomorphisms $H^0(X) \leftarrow V_X \rightarrow X$ where $V_X$ is the truncation $\dots \rightarrow X^{-1} \to \ker(d^0) \to 0$ and so these compose to an isomorphism in the derived category.
+
+    To show that this restriced map is full and faithful we can take $X,Y \in \mathcal{A}$ and any map $X \leftarrow Z \rightarrow Y$ we can take $H^0$ to get maps $X=H^0(X) \leftarrow H^0(Z) \rightarrow H^0(Y)=Y$ which will then fit into the equivalence 
+    \[
+\begin{tikzcd}
+                        & V_Z \arrow[ld] \arrow[rd] &                              \\
+Z \arrow[d] \arrow[rrd] &                           & H^0(Z) \arrow[d] \arrow[lld] \\
+X                       &                           & Y                           
+\end{tikzcd}
+    \]
+    So we may assume that the roof too is in $\mathcal{A}$ so the quasi isomorphism is just a true isomorphism and so the maps are precicely the maps $X \to Y$ so we are fully faithful
+\end{solution}
+\setcounter{section}{6}
 
 \end{document}
