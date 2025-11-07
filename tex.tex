@@ -86,6 +86,7 @@
 
 
 \newcommand{\nul}{Nullstellensatz }
+\newcommand{\newsect}[1]{\setcounter{subsection}{#1}\setcounter{exercise}{0}}
 
 % \usepackage{ccfonts}
 % \usepackage[T1]{fontenc}
@@ -112,8 +113,9 @@ For the sake of consistancy denote
     \item $\mathbf{D}(\mathcal{A})$ the derived category $\mathbf{K}(\mathcal{A})[\{\text{q-iso}\}^{-1}]$ with $\mathbf{D}^b, \mathbf{D}^+, \mathbf{D}^-$ being the subcategory of bounded, positive degree and negative degree complexes respectively
     \item For a localising system we can take the category of spans modulo some relations as the localisation, for this I use the convention from Gelfand-Manin, not that of the book this is from.
 \end{enumerate}
+\pagebreak
 \setcounter{section}{1} 
-\setcounter{subsection}{2} 
+\newsect{2}
 \begin{exercise}
 Let $\mathcal{A}$ be an abelian category. Show that $\mathbf{K}(\mathcal A)$ and $\mathbf D (\mathcal A)$ are additive categories, and that the canonical functor $\mathbf{K} (\mathcal A) \to \mathbf D (\mathcal A)$ is additive
 \end{exercise}
@@ -171,38 +173,74 @@ Which clearly commutes iff $df=fd$ and $dg=gd$ ie that we have a map to $A$ and 
 We can now start the second part of the question. That is that the canonical map $\mathbf{K}(\mathcal{A}) \to \mathbf{D}(\mathcal{A})$ is an additive functor, that is it's a preadditive functor, that is it's on each hom group a map of abelian groups. For this we just check that when we do the derived addition to $X = X \to Y, X = X \to Y$.  In this case we can choose common roof $X$ and hense our projection maps are just the identities and so the sum is just the sum in $\mathbf K (\mathcal A)$
 \end{solution}
 \pagebreak
-\setcounter{subsection}{4} 
+\newsect{4}
 \begin{exercise}
     Let $\mathcal{A}$ be an abelian category and denote by $T$ the class of all quasi-isomorphisms in $\mathbf{C}(\mathcal{A})$. Show that two maps $f,g \colon X \to Y$ in $\mathbf{C}(\mathcal{A})$ are identified by the canonical functor $\mathbf{C}(\mathcal{A})\to \mathbf{C}(\mathcal{A})[T^{-1}]$ if $f - g$ is null homotopic 
 \end{exercise}
 \begin{solution}
     Note we have a problem, it's not the case that $T$ is a localising system in $\mathbf{C}(\mathcal{A})$ and so we don't have an easy way to attack the problem.
 
-    We start the only way that we can, suppose that $d \psi + \psi d = f - g$ we want to squeeze out a quasi isomorphism somewhere here. \todo{litterally the whole question}
+    We start the only way that we can, suppose that $d \psi + \psi d = g - f$ we want to squeeze out a quasi isomorphism somewhere here. [At this point I read the first sentence of the proof in Gelfand Manin which is just] we write $g=f+d\psi+\psi d$. And then you construct the cone of the two morphisms. Since cones are unique up to (not neccacarily unique) isomorphism in a triangulated category, if their cones are quasi iso, that pushes forward to an iso of distinguished triangles and hense the two morphisms are the same. Recalling that the cone of $f$ has differential
+    \[
+\begin{pmatrix}d_{X[1]} & 0 \\ f[1] & d_Y\end{pmatrix}
+    \]
+We need a map $\begin{pmatrix}A & B \\ C & D \end{pmatrix}$ so that 
+    \[
+\begin{pmatrix} d_{X[1]} & 0 \\ f[1] & d_Y\end{pmatrix} \begin{pmatrix}A & B \\ C & D \end{pmatrix} = \begin{pmatrix}A[1] & B[1] \\ C[1] & D[1] \end{pmatrix}\begin{pmatrix}d_{X[1]} & 0 \\ g[1] & d_Y\end{pmatrix} 
+    \]
+    That is 
+    \begin{align*}
+        d_{X[1]}A &= A[1]d_{X[1]} + B[1]g[1] \\
+        f[1]A+d_Y C &= C[1]ds_{X[1]} + D[1]g[1] \\
+        d_{X[1]}B &= B[1]d_{Y} \\
+        f[1]B + d_Y D &= D[1]d_Y
+    \end{align*}
+    The second equation suggests we let $C = \psi^i$, $A =id, D = id, B = 0$, blindly pushing this through in the $i$'th component we get
+    \begin{align*}
+        d_{X[1]}&= d_{X[1]} + 0 \\
+        f^{i+1} +d_Y \psi^i &= \psi^{i+1}d_{X[1]} + g^{i+1} \\
+        0 &= 0 \\
+        0 + d_Y  &= d_Y
+    \end{align*}
+Which are all true, the second one is true thanks to $\psi$ being a homotopy and $d_{X[1]}^i=-d_X^{i+1}$. This matrix 
+\[
+\begin{pmatrix}
+    id & 0\\
+    \psi & id
+\end{pmatrix}
+\]
+Is a quasi isomorphism since litterally look at it. Once we pass to homology we see that each map has determinant $1$ and so is invertable. This gives us the quasi-isomorphism of cones and hense of distinguished triangles and so in $\mathbf{C}(\mathcal{A})[T^{-1}]$, $f=g$
+
+Ok so reading a full solution I jumped the gun a little there, we dont know that $\mathbf{C}(\mathcal{A})[T^{-1}]$ is triangulated lmao. Instead you use this quasi isomorphism to make an iso of Cylinders
+\[
+\operatorname{Cyl}(f) = X \oplus X[1] \oplus Y \quad d_{\operatorname{Cyl}(f)}^i(x_1, x_2, y) = (d_X x - x_2, - d_X x_2, f(x_2)+d_Y y)
+\]
+Thanks to the diagram with exact rows
+\[
+\begin{tikzcd}
+            & 0 \arrow[r]                                & Y \arrow[r] \arrow[d, "\alpha"]                    & \operatorname{Cone}(f) \arrow[r] \arrow[d, Rightarrow, no head] & {X[1]} \arrow[r] & 0 \\
+0 \arrow[r] & X \arrow[r] \arrow[d, Rightarrow, no head] & \operatorname{Cyl}(f) \arrow[r] \arrow[d, "\beta"] & \operatorname{Cone}(f) \arrow[r]                                & 0                &   \\
+            & X \arrow[r]                                & Y                                                  &                                                                 &                  &  
+\end{tikzcd}
+\]
+With $\alpha$,$\beta$ quasi iso, $\beta \alpha = id$, $\alpha \beta \simeq id$. Calling the cylinder map $C$ we can glue the two diagrams together to conclude that $f = \beta_f\bar{f}, g=\beta_g C \bar{f}$ so when we localise $\beta_f^{-1}=\alpha_f$ so $g = \beta_g C \alpha_f f = f$ by commutativity.
 \end{solution}
 \pagebreak
-\setcounter{subsection}{5}
+\newsect{5}
 \begin{exercise}
     Let $\mathcal{A}$ be the module category for some ring $\Lambda$. Show that $\hom_{\mathbf{D}(\mathcal{A})}(\Lambda,X) \cong H^0(X)$ for every complex of $\Lambda$ modules
 \end{exercise} 
 \begin{solution}
-    First note that because homology groups respect homotopy we can equivocate homotopy representatives and homotopy classes relatively freely. Suppose then that we have a morphism $\Lambda \to X$, that is a $H^0$ complex $Z$ with q-iso to $\Lambda$ and a map to $X$, taking homology of this triangle then we get $\Lambda \leftarrow H^0(Z) \rightarrow H^0(X)$ where the first map is a quasi isomorphism, so we get a canonical element of $H^0(X)$ by pulling back $1$ and then pushing it down to $H^0(X)$. This gives us a group homomorphism $\hom_{\mathbf{D}(\mathcal{A})}(\Lambda, X) \to H^0(X)$, it's well defnied as if we had another roof it's the same up to coherent quasi isomorphism so gives the same maps in homology. Additionally it's a group hom as if we add together two maps we have seen that this just adds together the maps modulo quasi isomorphisms that vanish when we take $H^0$ and so we end up with $(f+g)(1)=f(1)+g(1)$ so we do in fact get a group homomorphism. It suffices now to check that it's an isomorphism. Clearly it's surjective by taking $\Lambda = \Lambda \to X$ sending $1$ to any element. Then if $f \mapsto 0$ we have that the induced map on homology $H^0(\Lambda)=\Lambda\to H^0(X)$ maps $1$ to $0$ and is thus the zero map as it must respect the $\Lambda$-action. To complete the proof then we want to prove the following lemma
+    First note that because homology groups respect homotopy we can equivocate homotopy representatives and homotopy classes relatively freely. Suppose then that we have a morphism $\Lambda \to X$, that is a $H^0$ complex $Z$ with q-iso to $\Lambda$ and a map to $X$, taking homology of this triangle then we get $\Lambda \leftarrow H^0(Z) \rightarrow H^0(X)$ where the first map is a quasi isomorphism, so we get a canonical element of $H^0(X)$ by pulling back $1$ and then pushing it down to $H^0(X)$. This gives us a group homomorphism $\hom_{\mathbf{D}(\mathcal{A})}(\Lambda, X) \to H^0(X)$, it's well defnied as if we had another roof it's the same up to coherent quasi isomorphism so gives the same maps in homology. Additionally it's a group hom as if we add together two maps we have seen that this just adds together the maps modulo quasi isomorphisms that vanish when we take $H^0$ and so we end up with $(f+g)(1)=f(1)+g(1)$ so we do in fact get a group homomorphism. It suffices now to check that it's an isomorphism. Clearly it's surjective by taking $\Lambda = \Lambda \to X$ sending $1$ to any element. Then if $f \mapsto 0$ we have that the induced map on homology $H^0(\Lambda)=\Lambda\to H^0(X)$ maps $1$ to $0$ and is thus the zero map as it must respect the $\Lambda$-action. This is probably not enough, note the follwoing lemma [Exercise III.4.1] in Gelfand-Manin
     \begin{lemma}
-        If $f \in \hom_{\mathbf{D}(\mathcal{A})}(X,Y)$ induces the zero map on all homology groups, it is the zero map in the derived category, that is it factors through zero / is equivalent to $X = X \rightarrow 0 \rightarrow Y$
+        For $f \in \hom_{\mathbf{K}(\mathcal{A})}(X,Y)$
+        TFAE \begin{enumerate}
+            \item $f = 0$ in $\mathbf{D}(\mathcal{A})$
+            \item There is a quasi isomorphism $s\colon Y \to Z$ so that $sf \simeq 0$
+            \item There is a quasi isomorphism $t \colon W \to X$ so that $ft \simeq 0$
+        \end{enumerate}
     \end{lemma}
-    \begin{proof}
-        \todo{prove this lemma, or at least prove its true for $X$ a $H^0$ complex}
-    \end{proof}
-%     \[
-% \begin{tikzcd}
-%                   & \vdots                                     & \vdots           \\
-% 0                 & 0 \arrow[r] \arrow[u]                      & X^1 \arrow[u]    \\
-% \Lambda \arrow[u] & \ker(d^{0}) \arrow[r] \arrow[u] \arrow[l] & X^0 \arrow[u]    \\
-% 0 \arrow[u]       & Z^{-1} \arrow[r] \arrow[u]                 & X^{-1} \arrow[u] \\
-%                   & \vdots \arrow[u]                           & \vdots \arrow[u]
-% \end{tikzcd}
-%     \]
-%     W
+    So in general we don't expect that inducing the zero map in homology is enough to get the map is zero. It is however neccacary so is a healthy sign toward $f=0$. By freeness of $\Lambda$ as a $\Lambda$ module we can find a map $\Lambda \to Z^0$ so that $\Lambda \to Z^0 \to \Lambda$ is the identity map. Hense we can replace $Z$ with $\Lambda$ as it acts as a roof over $Z$ so we have $\Lambda = \Lambda \to X$ where since the map $\Lambda \to X$ induces the zero map in homology it must be homotopic to the zero map since we end up in the image we can find a factorisation $\Lambda \to X^{-1} \to X^0 = \Lambda \to X^0$ which gives us the homotopy we need as everything else is zero. Hense $f=0$ and we're done
 \end{solution}
 \pagebreak
 \begin{exercise}
@@ -221,6 +259,46 @@ X                       &                           & Y
     \]
     So we may assume that the roof too is in $\mathcal{A}$ so the quasi isomorphism is just a true isomorphism and so the maps are precicely the maps $X \to Y$ so we are fully faithful
 \end{solution}
-\setcounter{section}{6}
-
+\pagebreak
+\newsect{6}
+\begin{exercise}
+    Let $\mathcal{A}$ be the category of vector spaces over a field $k$. Describe all objects and morphisms in $\mathbf{D}(\mathcal{A})$
+\end{exercise}
+\begin{solution}
+    
+\end{solution}
+\pagebreak
+\begin{exercise}
+    Let $\mathcal{A}$ be the category of finitely generated abelian groups and $\mathcal{P}$ be the category of fintely generated free abelian groups. Describe all objects and morphisms in $\mathbf{D}^b(\mathcal{A})$. Show that the canonical functor $\mathbf{K}^b(\mathcal{P}) \to \mathbf{D}^b(\mathcal{A})$ is an equivalence
+\end{exercise}
+\begin{solution}
+    
+\end{solution}
+\pagebreak
+\begin{exercise}
+    Let $k$ be a field and consider the following finite dimensional algebras
+    \[
+    \Lambda_1 = \begin{pmatrix}
+        k & k & k \\ 0 & k & k \\ 0 & 0 & k
+    \end{pmatrix}\quad
+    \Lambda_2 = \begin{pmatrix}
+        k & k & 0 \\ 0 & k & 0 \\ 0 & k & k
+    \end{pmatrix}\quad
+    \Lambda_3 = \begin{pmatrix}
+        0 & 0 & k \\ 0 & 0 & 0 \\ 0 & 0 & 0
+    \end{pmatrix}
+    \]
+    Describe, in each case, the category $\mathcal{A}_i$ of finite dimensional $\Lambda_i$-modules and its derived category $\mathbf{D}^b(\mathcal{A}_i)$. Here are some hints
+    \begin{enumerate}
+        \item $\mathcal{A}_1$ and $\mathcal{A}_2$ are hereditary categories, but $\mathcal{A}_3$ is not.
+        \item Each object in $\mathcal{A}_i$ or $\mathbf{D}^b(\mathcal{A}_i)$ decomposes essentially uniquely into a finite number of indecomposable objects
+        \item The indecomposable projective $\Lambda_i$ modules are $E_{jj}\Lambda_i, j = 1,2,3$
+        \item $\Lambda_1$ and $\Lambda_2$ have each $6$ pairwise non-isomorphic indecomposable modules, and $\Lambda_3$ has $5$
+        \item $\ext[n]_{\Lambda_i}(X,Y)$ has $k$ dimenion at most $1$ for all indecomposable $\Lambda_i$-modules $X,Y$ and $n \geq 0$
+    \end{enumerate}
+    The \textit{Auslander-Reiten quiver} provides a convenient method to display the categories $\mathcal{A}_i$ and $\mathbf{D}^i(\mathcal{A}_i)$, because the morphism spaces between indecomposable objects are at most one dimensional. This quiver is defined as follows. The vertices correspond to the indecomposable objects. Put an arrow $X \to Y$ between two indecomposable objects if there is an irreducible map $\phi: X \to Y$ (where $\phi$ is irreducible if $\phi$ is not invertable and any factorisation $\phi = \phi'' \circ \phi'$ implies that $\phi'$ is a split monomorphism or $\phi''$ is a split epimorphism)
+\end{exercise}
+\begin{solution}
+    
+\end{solution}
 \end{document}
