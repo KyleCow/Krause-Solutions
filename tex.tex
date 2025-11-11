@@ -265,14 +265,110 @@ X                       &                           & Y
     Let $\mathcal{A}$ be the category of vector spaces over a field $k$. Describe all objects and morphisms in $\mathbf{D}(\mathcal{A})$
 \end{exercise}
 \begin{solution}
-    
+    By freeness of vector spaces we know that since $H^i(X)$ is a vector space we can construct maps from it quite easily, in fact for any $d$ we have the quotient map $\ker d \to H^i(X)$ and hense can construct a section $H^i(X) \to \ker d$, which therefor induces a map $H^i(X) \to X^i$. This motivates the following lemma
+    \begin{lemma}
+        For $X \in \mathbf{K}(k-\mathbf{vect})$ there exists a quasi isomorphism $H^\bullet(X) \to X$ where $H^\bullet(X)$ denotes the complex
+        \[
+\begin{tikzcd}
+\dots \arrow[r, "0"] & H^{-1}(X) \arrow[r, "0"] & H^0(X) \arrow[r, "0"] & H^1(X) \arrow[r, "0"] & \dots
+\end{tikzcd}
+        \]
+    \end{lemma}
+    \begin{proof}
+        First note that the homology of this complex at $i$ is $\ker 0 / \im 0 = H^i(X)$ and so a quasi isomorphism is reasonable to expect.
+        
+        We construct the map as described before, ie we lift through the kernel to make a map $H^i(X) \to X^i$. This map is clearly a quasi isomorphism as it's a chain map since we land in the kernel so $fd = df = 0$ and is quasi iso since the induced map on kernels induces an isomorphism in the quotients by construction
+    \end{proof}
+    This then gives us a precise description of the category
+    \begin{proposition}
+        There is an equivalence of categories $\prod_\Z \mathcal{A} \to \mathbf{D}(\mathcal{A})$ sending a $\Z$ indexed tuple of vector spaces $(\dots,X^{-1},X^{0},X^{1},\dots)$ to the sequence \[\dots \to X^{-1}\to X^0\to X^1\to\dots
+        \]
+        With $d=0$
+    \end{proposition}
+    \begin{proof}
+        We showed in the previous lemma that this map is essentially surjective, it just then suffices to show that it's full and faithful. Suppose we have two complexes with zero differential $X,Y$ and a map between them $X \leftarrow Z \rightarrow Y$ we know from the previous lemma that there's a quasi isomorphism $X \to Z$ that maps down to the identity so we can assume our span is of the form $X = X \rightarrow Y$ Thus it's clear that the functor is full since for any map $X \to Y$ it is a sequence of maps in each component and hense id just the image of some map in the product category. If we then assume that two morphisms end up equivalent, that is we have a common roof  
+        \[
+\begin{tikzcd}
+                                             & Z \arrow[ld] \arrow[rd] &                                              \\
+X \arrow[d, Rightarrow, no head] \arrow[rrd] &                         & X \arrow[lld, Rightarrow, no head] \arrow[d] \\
+X                                            &                         & Y                                           
+\end{tikzcd}
+        \]
+        We see that the two maps $Z \to X$ are the same and hense the maps $X \to Y$ are the same and so are homotopic. There are no interesting homotopies between these two complexes as $d\psi +\psi d = 0$ so two maps are homotopic if and only if they are equal pointwise so the two maps must've been the same in the product
+    \end{proof}
 \end{solution}
 \pagebreak
 \begin{exercise}
     Let $\mathcal{A}$ be the category of finitely generated abelian groups and $\mathcal{P}$ be the category of fintely generated free abelian groups. Describe all objects and morphisms in $\mathbf{D}^b(\mathcal{A})$. Show that the canonical functor $\mathbf{K}^b(\mathcal{P}) \to \mathbf{D}^b(\mathcal{A})$ is an equivalence
 \end{exercise}
 \begin{solution}
-    
+    While this is stated as two parts, I feel like an eqivalence of categories is exactly what we want when describing all objects and morphisms. 
+
+    We want to do some resolution-y thing since this is exactly what we do when deriving functors\footnote{at this point i want to google eilenburn something resolution 
+    (names aren't my strong suit) but i will abstain for now}, we find a class of objects so that this equivalence exists and use the equivalence to derive our functor. Finitely generated abelian groups are nice since they're precicely quotients of free groups and hense for any $G$ we have free resolution
+    \[
+0 \to \Z^m \to \Z^n \to G \to 0
+    \]
+    Note that any map $G \to H$ lifts to a map of these resolutions (unique up to homotopy) as free objects are projective, the lifts can here be constructed in the obvious way so we get a big ol diagram
+    \[
+\begin{tikzcd}
+\dots \arrow[r]   & 0 \arrow[d] \arrow[r]           & 0 \arrow[d] \arrow[r]        & 0 \arrow[d] \arrow[r]        & \dots   \\
+\dots \arrow[r]   & \Z^{m_{-1}} \arrow[r] \arrow[d] & \Z^{m_0} \arrow[r] \arrow[d] & \Z^{m_1} \arrow[d] \arrow[r] & \dots   \\
+\dots \arrow[r]   & \Z^{n_{-1}} \arrow[r] \arrow[d] & \Z^{n_0} \arrow[r] \arrow[d] & \Z^{n_1} \arrow[d] \arrow[r] & \dots   \\
+\dots \arrow[r] & X^{-1} \arrow[r] \arrow[d]      & X^0 \arrow[r] \arrow[d]      & X^1 \arrow[r] \arrow[d]      & \dots \\
+                & 0                               & 0                            & 0                            &      
+\end{tikzcd}
+    \]
+    Which we somehow want to extract a complex of free groups that's quasi isomorphic to our original complex. If we started with just $X$ concentrated in a single degree our free resolution would give the following quasi iso
+    \[
+\begin{tikzcd}
+0 \arrow[r] & \Z^m \arrow[r] & \Z^n \arrow[r] \arrow[d] & 0 \\
+            & 0 \arrow[r]    & G \arrow[r]              & 0
+\end{tikzcd}
+    \]
+    But our problem is with more groups that there's overlaps, if we suggestively reshape our diagram as follows 
+    \[\begin{tikzcd}
+	\dots & 0 & 0 & 0 & \dots \\
+	& \dots & {\Z^{m_{-1}}} & {\Z^{m_0}} & {\Z^{m_1}} & \dots \\
+	&& \dots & {\Z^{n_{-1}}} & {\Z^{n_0}} & {\Z^{n_1}} & \dots \\
+	&& \dots & {X^{-1}} & {X^0} & {X^1} & \dots \\
+	&&& 0 & 0 & 0
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-2, to=1-3]
+	\arrow[from=1-2, to=2-3]
+	\arrow[from=1-3, to=1-4]
+	\arrow[from=1-3, to=2-4]
+	\arrow[from=1-4, to=1-5]
+	\arrow[from=1-4, to=2-5]
+	\arrow[from=2-2, to=2-3]
+	\arrow[from=2-3, to=2-4]
+	\arrow[from=2-3, to=3-4]
+	\arrow[from=2-4, to=2-5]
+	\arrow[from=2-4, to=3-5]
+	\arrow[from=2-5, to=2-6]
+	\arrow[from=2-5, to=3-6]
+	\arrow[from=3-3, to=3-4]
+	\arrow[from=3-4, to=3-5]
+	\arrow[from=3-4, to=4-4]
+	\arrow[from=3-5, to=3-6]
+	\arrow[from=3-5, to=4-5]
+	\arrow[from=3-6, to=3-7]
+	\arrow[from=3-6, to=4-6]
+	\arrow[from=4-3, to=4-4]
+	\arrow[from=4-4, to=4-5]
+	\arrow[from=4-4, to=5-4]
+	\arrow[from=4-5, to=4-6]
+	\arrow[from=4-5, to=5-5]
+	\arrow[from=4-6, to=4-7]
+	\arrow[from=4-6, to=5-6]
+\end{tikzcd}\]
+We could consider taking the sum in each component ie let $F^i = \Z^{n_i} \oplus \Z^{m_{i+1}}$ with differential $d_F \colon (t,s) \mapsto (fs-dt, ds)$ where $d$ is the lift of the differential  by starting from one end and moving along we can choose a lift so that $d^2 = 0$ and hense this differential also satisfies $d_F^2=0$ as
+\[
+d_Fd_F(t,s) = d_F(fs-dt,ds) = (f(ds) - d(fs-dt), dds) = (fds - dfs + ddt, dds) = 0
+\]
+Note that this is precicely the mapping cone for $Z^{m_i} \to Z^{n_i}$ and hense has homology fitting into the same long exact sequence as the one $X$ fits into. As the projection map commutes everything we know that by the five lemma it induces an isomorphism in homology so is quasi iso. This shows that the map $\mathbf{K}^b(\mathcal{P}) \to \mathbf{D}^b(\mathcal{A})$ is essentially surjective.
+
+Checking fully faithfullness is then not too bad, for a map $X \leftarrow Z \rightarrow Y$ since $X$ is free we can find a section $X \to Z$ and hense we can replace $Z$ with the roof $X$ so everything is of the form $X = X \to Y$ and so the functor is full. It's then faithful as if we have two equivalent morphisms we draw the same diagram as in the previous exercise and conclude that the maps are homotopic. This shows that our map $\mathbf{K}^b(\mathcal{A}) \to \mathbf{D}^b(\mathcal{A})$ is an equivalence.
 \end{solution}
 \pagebreak
 \begin{exercise}
@@ -299,6 +395,6 @@ X                       &                           & Y
     The \textit{Auslander-Reiten quiver} provides a convenient method to display the categories $\mathcal{A}_i$ and $\mathbf{D}^i(\mathcal{A}_i)$, because the morphism spaces between indecomposable objects are at most one dimensional. This quiver is defined as follows. The vertices correspond to the indecomposable objects. Put an arrow $X \to Y$ between two indecomposable objects if there is an irreducible map $\phi: X \to Y$ (where $\phi$ is irreducible if $\phi$ is not invertable and any factorisation $\phi = \phi'' \circ \phi'$ implies that $\phi'$ is a split monomorphism or $\phi''$ is a split epimorphism)
 \end{exercise}
 \begin{solution}
-    
+    --
 \end{solution}
 \end{document}
