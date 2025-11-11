@@ -135,6 +135,14 @@ as the sum of our two morphisms. Since sadly this choice of $W$ isn't canonical,
 W^\Delta \arrow[d, dashed] \arrow[r, dashed] & W' \arrow[d] & W^\square \arrow[d, dashed] \arrow[r, dashed] & W' \arrow[d] & W^\circ \arrow[d, dashed] \arrow[r, dashed] & W^\square \arrow[d] \\
 W \arrow[r]                                  & Z            & W \arrow[r]                                   & Z'           & W^\Delta \arrow[r]                          & X                  
 \end{tikzcd}\]
+<<<<<<< HEAD
+=======
+
+This is almost what we want as each of the squares constructing $W^\Delta,W^\square$ tell us going via $W^\Delta$ we have the commutativity we want for $a,b$ and going via $W^\square$ we have commutativity for $a',b'$. Our issue is that we still lack canonical morphisms to $W,W'$ letting us do both at once.
+
+As we have two natural routes, this can be fixed by noting that the maps $W^\circ \rightrightarrows W$ are equalised once we get to $X$ and so since $W \to X$ is a quasi iso they must be equalised from some quasi iso $V_* \to W^\circ$, doing the same for $W'$ we get two maps to $W^\circ$ so applying the extensionality one more time gives us some $V$ with quasi isomorphisms $\mu\colon V \to W, \mu' \colon V \to W'$, and since we've fixed our problem, $a\mu=b\mu', a'\mu=b'\mu'$. So we have a common roof for our two sums so they're equivalent and our construction is well defined.
+
+>>>>>>> ae58a5c039bee7ea7cbcee6d5bdb9f74f62f4e75
 
 This is almost what we want as each of the squares constructing $W^\Delta,W^\square$ tell us going via $W^\Delta$ we have the commutativity we want for $a,b$ and going via $W^\square$ we have commutativity for $a',b'$. Our issue is that we still lack canonical morphisms to $W,W'$ letting us do both at once.
 
