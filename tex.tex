@@ -135,14 +135,6 @@ as the sum of our two morphisms. Since sadly this choice of $W$ isn't canonical,
 W^\Delta \arrow[d, dashed] \arrow[r, dashed] & W' \arrow[d] & W^\square \arrow[d, dashed] \arrow[r, dashed] & W' \arrow[d] & W^\circ \arrow[d, dashed] \arrow[r, dashed] & W^\square \arrow[d] \\
 W \arrow[r]                                  & Z            & W \arrow[r]                                   & Z'           & W^\Delta \arrow[r]                          & X                  
 \end{tikzcd}\]
-<<<<<<< HEAD
-=======
-
-This is almost what we want as each of the squares constructing $W^\Delta,W^\square$ tell us going via $W^\Delta$ we have the commutativity we want for $a,b$ and going via $W^\square$ we have commutativity for $a',b'$. Our issue is that we still lack canonical morphisms to $W,W'$ letting us do both at once.
-
-As we have two natural routes, this can be fixed by noting that the maps $W^\circ \rightrightarrows W$ are equalised once we get to $X$ and so since $W \to X$ is a quasi iso they must be equalised from some quasi iso $V_* \to W^\circ$, doing the same for $W'$ we get two maps to $W^\circ$ so applying the extensionality one more time gives us some $V$ with quasi isomorphisms $\mu\colon V \to W, \mu' \colon V \to W'$, and since we've fixed our problem, $a\mu=b\mu', a'\mu=b'\mu'$. So we have a common roof for our two sums so they're equivalent and our construction is well defined.
-
->>>>>>> ae58a5c039bee7ea7cbcee6d5bdb9f74f62f4e75
 
 This is almost what we want as each of the squares constructing $W^\Delta,W^\square$ tell us going via $W^\Delta$ we have the commutativity we want for $a,b$ and going via $W^\square$ we have commutativity for $a',b'$. Our issue is that we still lack canonical morphisms to $W,W'$ letting us do both at once.
 
@@ -388,7 +380,7 @@ Checking fully faithfullness is then not too bad, for a map $X \leftarrow Z \rig
     \Lambda_2 = \begin{pmatrix}
         k & k & 0 \\ 0 & k & 0 \\ 0 & k & k
     \end{pmatrix}\quad
-    \Lambda_3 = \begin{pmatrix}
+    \Lambda_3 = \Lambda_1 / I, \ I = \begin{pmatrix}
         0 & 0 & k \\ 0 & 0 & 0 \\ 0 & 0 & 0
     \end{pmatrix}
     \]
@@ -403,6 +395,39 @@ Checking fully faithfullness is then not too bad, for a map $X \leftarrow Z \rig
     The \textit{Auslander-Reiten quiver} provides a convenient method to display the categories $\mathcal{A}_i$ and $\mathbf{D}^i(\mathcal{A}_i)$, because the morphism spaces between indecomposable objects are at most one dimensional. This quiver is defined as follows. The vertices correspond to the indecomposable objects. Put an arrow $X \to Y$ between two indecomposable objects if there is an irreducible map $\phi: X \to Y$ (where $\phi$ is irreducible if $\phi$ is not invertable and any factorisation $\phi = \phi'' \circ \phi'$ implies that $\phi'$ is a split monomorphism or $\phi''$ is a split epimorphism)
 \end{exercise}
 \begin{solution}
-    --
+    \todo{this looks involved and im ill}
+\end{solution}
+\newsect{7}
+\pagebreak
+\begin{exercise}
+    Let $\mathcal{A}$ be an abelian category. Show that the canonical functor $\mathbf{D}^b(\mathcal{A})\to \mathbf{D}(\mathcal{A})$ is fully faithful
+\end{exercise}
+\begin{solution}
+    This is equivalent to showing that for any span $X\leftarrow Z\rightarrow Y$ for $X,Y$ bounded complexes, we can assume that $Z$ is bounded. Since $Z$ has bounded cohomology we can assume that it's bounded above by taking the quasi isomorphism $V_{Z[i]}[-i] \to Z$ for some appropriate choice of $i$. We can also cut off the negative part by taking the cokernel truncation of this $V\rightarrow U^{V[j]}[-j]$, far enough along that all of the maps $Z\rightarrow X,Z\rightarrow Y$ are the zero map. This allows us to factor the maps to $X,Y$ through this quasi isomorphism and since we cut off both ends this is an equivalent roof that's totally bounded so we are done.
+\end{solution}
+\pagebreak
+\begin{exercise}
+    Let $\mathcal{A}$ be an abelian category and denote by $\mathcal{I}$ the full subcategory of injective objects. Suppose that $\mathcal{A}$ has enough injective objects. Then the canonical functor $\mathbf{K}^+(\mathcal{I}) \to \mathbf{D}^+(\mathcal{A})$ is an equivalence.
+\end{exercise}
+\begin{solution}
+    We need to know $2$ things, every complex is quasi-isomorpic to a complex of injective objects, and that a map of injective complexes is the same when localised at quasi-isomorphisms
+
+    The first thing is done by recalling from before what we did with projective objects before. 
+    \[
+\begin{tikzcd}
+\dots \arrow[r] & X^{-1} \arrow[d] \arrow[r]                                & X^0 \arrow[d] \arrow[r]                         & X^1 \arrow[d] \arrow[r]                              & \dots                      &                 &       \\
+\dots \arrow[r] & I^0_{-1} \arrow[rd, "\del_{-1}^0"'] \arrow[r, "d^0_{-1}"] & I_0^0 \arrow[rd, "\del_0^0"] \arrow[r, "d^0_0"] & I_1^0 \arrow[rd, "\del_{1}^0"] \arrow[r, "d^0_{-1}"] & \dots                      &                 &       \\
+                & \dots \arrow[r]                                           & I_{-1}^1 \arrow[r] \arrow[rd]                   & I_0^1 \arrow[rd] \arrow[r]                           & I^1_1 \arrow[rd] \arrow[r] & \dots           &       \\
+                &                                                           & \dots \arrow[r]                                 & I_{-1}^0 \arrow[r]                                   & I^2_0 \arrow[r]            & I^2_1 \arrow[r] & \dots
+\end{tikzcd}
+    \]
+    
+    Since $\mathcal{A}$ has enough injectives for each object in a complex in $\mathbf{K}(\mathcal{A})$ we have an injective resolution $A \to I^0 \to I^1 \to I^2 \dots$ we can then by standard results for injective objects descend the differential to a differential on each $I_i^0 \to I_{i+1}^0$ by starting from the bottom to ensure each lift satisfies $d^2=0$ we then define a familiar complex
+    \[
+J^n = \bigoplus_{i+j=n} I_{i}^{j}
+    \]
+    With differential $(-1)^n(d-\del)$, this is a differential as its double application is just difference of squares, but as both square to zero it's the zero map. This is then a quasi isormohpism as the kernel is where $d$ and $\del$ agree, which is precicely when they come from something in the image by exactness of $\del$ + commutativity. That is unless we're at the end of the chain where there is no image, so the kernel is just the kernel of the $d_X$, the image has the same property so as the map is just inclusion of the kernel we conclude that this is a quasi isomorphims.
+
+    By standard results in homological algebra each of these injective resolutions are unique up to homotopy and hense this total complex is a unique resolution up to homotopy, this gives us our fully faithful as $X \leftarrow Z \rightarrow Y$ $X$ is an injective resolution of $Z$ and hense any map $Z \to Y$ is uniquely determined as a map $X \to Y$ since $Y$ is injective so this is fully faithful \todo{rewrite this too ill}
 \end{solution}
 \end{document}
